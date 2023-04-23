@@ -46,7 +46,7 @@ function Login(props: PaperProps) {
       mt="7rem"
     >
       <Paper radius="md" px="xl" py="xl" withBorder {...props}>
-        <Text size="lg" weight={500} mx="auto">
+        <Text size="lg" weight={500} mx="auto" align="center" my="md">
           Welcome to Note App
         </Text>
 
@@ -57,8 +57,6 @@ function Login(props: PaperProps) {
               leftIcon={<GoogleIcon />}
               variant="default"
               color="gray"
-              //   onClick={() => {}
-              //     }
             >
               Continue with Google
             </Button>
