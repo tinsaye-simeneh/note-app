@@ -17,6 +17,7 @@ import {
 } from "@mantine/core";
 import { GoogleIcon } from "./GoogleIcon";
 import { FacebookIcon } from "./FacebookIcon";
+import supabase from "../../utilities/supabaseClient";
 
 function Login(props: PaperProps) {
   const [type, toggle] = useToggle(["login", "register"]);
@@ -37,10 +38,17 @@ function Login(props: PaperProps) {
     },
   });
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: "example@email.com",
+      password: "example-password",
+    });
+  };
+
   return (
     <Container
       size="xs"
-      bg={type === "register" ? "red" : "green"}
+      bg={type === "register" ? "red" : "#103037"}
       px={type === "register" ? "xl" : "md"}
       py="xl"
       mt="7rem"
@@ -145,7 +153,7 @@ function Login(props: PaperProps) {
                 ? "Already have an account? Login"
                 : "Don't have an account? Register"}
             </Anchor>
-            <Button type="submit" radius="xl" bg="green">
+            <Button type="submit" radius="xl" bg="#103037">
               {upperFirst(type)}
             </Button>
           </Group>

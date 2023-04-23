@@ -1,6 +1,9 @@
 import Head from "next/head";
+import supabase from "../utilities/supabaseClient";
 
 export default function Home() {
+  const { user } = supabase.auth;
+
   return (
     <div>
       <Head>
