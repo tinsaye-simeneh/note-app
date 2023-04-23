@@ -1,4 +1,5 @@
 import { useToggle, upperFirst } from "@mantine/hooks";
+import { useState } from "react";
 import { useForm } from "@mantine/form";
 import {
   TextInput,
@@ -18,13 +19,17 @@ import {
 import { GoogleIcon } from "./GoogleIcon";
 import { FacebookIcon } from "./FacebookIcon";
 import supabase from "../../utilities/supabaseClient";
+import { router } from "next/client";
 
-function Login(props: PaperProps) {
+function Account(props: PaperProps) {
   const [type, toggle] = useToggle(["login", "register"]);
+  const [user, setUser] = useState(null);
+
   const form = useForm({
     initialValues: {
       email: "",
       name: "",
+      phone: "",
       password: "",
       terms: true,
     },
@@ -38,20 +43,41 @@ function Login(props: PaperProps) {
     },
   });
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: "example@email.com",
-      password: "example-password",
-    });
+  const handleSubmit = async () => {
+    if (type === "register") {
+      const { data, error } = await supabase.auth.signUp({
+        email: form.values.email,
+        password: form.values.password,
+      });
+
+      if (error) {
+        alert(error.message);
+      } else {
+        alert("Check your email for the confirmation link");
+      }
+    } else {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: form.values.email,
+        password: form.values.password,
+      });
+
+      if (error) {
+        alert(error.message);
+      } else {
+        alert("Logged in successfully");
+        console.log(data);
+        router.push("/");
+      }
+    }
   };
 
   return (
     <Container
       size="xs"
-      bg={type === "register" ? "red" : "#103037"}
+      bg={type === "register" ? "#103037" : "#103037"}
       px={type === "register" ? "xl" : "md"}
       py="xl"
-      mt="7rem"
+      mt={type === "register" ? "4rem" : "7rem"}
     >
       <Paper radius="md" px="xl" py="xl" withBorder {...props}>
         <Text size="lg" weight={500} mx="auto" align="center" my="md">
@@ -89,18 +115,34 @@ function Login(props: PaperProps) {
           my="lg"
         />
 
-        <form onSubmit={form.onSubmit(() => {})}>
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            handleSubmit();
+          }}
+        >
           <Stack>
             {type === "register" && (
-              <TextInput
-                label="Name"
-                placeholder="Your name"
-                value={form.values.name}
-                onChange={(event) =>
-                  form.setFieldValue("name", event.currentTarget.value)
-                }
-                radius="md"
-              />
+              <>
+                <TextInput
+                  label="Name"
+                  placeholder="Your name"
+                  value={form.values.name}
+                  onChange={(event) =>
+                    form.setFieldValue("name", event.currentTarget.value)
+                  }
+                  radius="md"
+                />
+                <TextInput
+                  label="Name"
+                  placeholder="Your Phone"
+                  value={form.values.phone}
+                  onChange={(event) =>
+                    form.setFieldValue("name", event.currentTarget.value)
+                  }
+                  radius="md"
+                />
+              </>
             )}
 
             <TextInput
@@ -163,4 +205,4 @@ function Login(props: PaperProps) {
   );
 }
 
-export default Login;
+export default Account;
