@@ -6,6 +6,7 @@ import {
   Container,
   rem,
 } from "@mantine/core";
+import { router } from "next/client";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -122,13 +123,19 @@ function Home() {
         <div className={classes.controls}>
           <Button
             className={classes.control}
+            type="submit"
             size="lg"
             variant="default"
             color="gray"
+            onClick={() => router.push("/auth/account?type=login")}
           >
             Login
           </Button>
-          <Button className={classes.control} size="lg">
+          <Button
+            className={classes.control}
+            size="lg"
+            onClick={() => router.push("/auth/account?type=register")}
+          >
             Register
           </Button>
         </div>
