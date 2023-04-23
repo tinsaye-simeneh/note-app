@@ -1,1 +1,1 @@
-This is a starter template for [Learn Next.js](https://nextjs.org/learn).
+# Note taking and Todo list app using Next.js, Mantine UI and Supabase
