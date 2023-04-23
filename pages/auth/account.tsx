@@ -19,11 +19,13 @@ import {
 import { GoogleIcon } from "./GoogleIcon";
 import { FacebookIcon } from "./FacebookIcon";
 import supabase from "../../utilities/supabaseClient";
-import { router } from "next/client";
+import { useRouter } from "next/router";
 
 function Account(props: PaperProps) {
   const [type, toggle] = useToggle(["login", "register"]);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const form = useForm({
     initialValues: {
@@ -53,6 +55,7 @@ function Account(props: PaperProps) {
       if (error) {
         alert(error.message);
       } else {
+        setLoading(true);
         alert("Check your email for the confirmation link");
       }
     } else {

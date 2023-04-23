@@ -6,7 +6,7 @@ import {
   Container,
   rem,
 } from "@mantine/core";
-import { router } from "next/client";
+import { useRouter } from "next/router";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -99,24 +99,23 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function Home() {
+  const router = useRouter();
   const { classes } = useStyles();
 
   return (
     <Container className={classes.wrapper} size={1400}>
       <div className={classes.inner}>
         <Title className={classes.title}>
-          Automated AI{" "}
           <Text component="span" className={classes.highlight} inherit>
-            code reviews
+            Perfect Note App{" "}
           </Text>{" "}
-          for any stack
+          for your daily needs
         </Title>
 
         <Container p={0} size={600}>
           <Text size="lg" color="dimmed" className={classes.description}>
-            Build more reliable software with AI companion. AI is also trained
-            to detect lazy developers who do nothing and just complain on
-            Twitter.
+            A place for your Notes and Tasks to be organized and accessible from
+            anywhere in the world
           </Text>
         </Container>
 
