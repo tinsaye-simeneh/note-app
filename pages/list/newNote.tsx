@@ -14,6 +14,8 @@ import {
 } from "@mantine/core";
 import { useRouter } from "next/router";
 import { IconNotes } from "@tabler/icons-react";
+import { useForm } from "@mantine/form";
+import { useState } from "react";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -31,6 +33,43 @@ const useStyles = createStyles((theme) => ({
 function myNotes() {
   const router = useRouter();
   const { classes } = useStyles();
+  const [notification, setNotification] = useState(false);
+  const form = useForm({
+    initialValues: {
+      title: "",
+      category: "",
+      notes: "",
+      termsOfService: false,
+    },
+    validate: {
+      title: (value) => {
+        if (!value.trim()) {
+          return "Note title is required";
+        }
+      },
+      category: (value) => {
+        if (!value.trim()) {
+          return "Note category is required";
+        }
+      },
+      notes: (value) => {
+        if (!value.trim()) {
+          return "Note is required";
+        }
+      },
+    },
+  });
+
+  const handleSave = () => {
+    if (form.validate) {
+      console.log("Validation failed");
+      setNotification(true);
+      return;
+    } else {
+      console.log("Validation passed");
+      setNotification(false);
+    }
+  };
 
   return (
     <Container size={1000} className={classes.wrapper}>
@@ -48,11 +87,17 @@ function myNotes() {
       </Group>
       {/* This is the container that holds the note title and button */}
       <Paper shadow="md" p="3rem">
+        {notification && (
+          <Text color="red" size="sm">
+            Please fill in all required fields
+          </Text>
+        )}
         <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
           <TextInput
             label="Note Title"
             placeholder="Enter your note title here"
-            required
+            withAsterisk
+            {...form.getInputProps("title")}
           />
           <Select
             label="Note Category"
@@ -63,7 +108,8 @@ function myNotes() {
               { value: "Study", label: "Study" },
               { value: "Finance", label: "Finance" },
             ]}
-            required
+            {...form.getInputProps("category")}
+            withAsterisk
           />
         </SimpleGrid>
 
@@ -72,7 +118,8 @@ function myNotes() {
           label="Your Notes"
           placeholder="Please include all relevant Note information here."
           minRows={10}
-          required
+          withAsterisk
+          {...form.getInputProps("notes")}
         />
       </Paper>
       <Group position="center" p="lg" mt="2rem">
@@ -87,7 +134,7 @@ function myNotes() {
           </Button>
         </Group>
         <Group>
-          <Button onClick={() => router.push("/list/myNotes")} size="md">
+          <Button onClick={() => handleSave()} size="md">
             Save
           </Button>
         </Group>
