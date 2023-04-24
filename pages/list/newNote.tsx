@@ -33,12 +33,10 @@ function myNotes() {
       {/* This is the container that holds the Page title and button */}
       <Group position="center" p="lg" bg="green">
         <Group>
-          <Title>My Notes</Title>
+          <Title>New Notes</Title>
         </Group>
         <Group ml="auto">
-          <Button onClick={() => router.push("/list/newNote")}>
-            Create a new note
-          </Button>
+          <Button onClick={() => router.push("/list/myNotes")}>My Notes</Button>
         </Group>
       </Group>
       {/* This is the container that holds the note title and button */}
@@ -48,7 +46,7 @@ function myNotes() {
           Note Title
         </Group>
         <Group ml="auto">
-          <Button onClick={() => router.push("/list/updateNote")}>Edit</Button>
+          <Button onClick={() => router.push("/list/newNote")}>Edit</Button>
         </Group>
       </Group>
     </Container>
