@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import { IconNotes } from "@tabler/icons-react";
 import { useForm } from "@mantine/form";
 import { useState } from "react";
+import supabase from "@supabase/supabase-js";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -60,15 +61,31 @@ function myNotes() {
     },
   });
 
-  const handleSave = () => {
-    if (form.validate) {
-      console.log("Validation failed");
+  const handleSave = async () => {
+    const { data, error } = await supabase.from("notes").insert([
+      {
+        title: form.values.title,
+        category: form.values.category,
+        notes: form.values.notes,
+      },
+    ]);
+    if (error) {
+      console.log("error", error);
+
       setNotification(true);
-      return;
-    } else {
-      console.log("Validation passed");
+    }
+    if (data) {
+      console.log("data", data);
       setNotification(false);
     }
+
+    router.push("/list/myNotes");
+
+    console.log("form.values", form.values);
+
+    console.log("form.values.title", form.values.title);
+    console.log("form.values.category", form.values.category);
+    console.log("form.values.notes", form.values.notes);
   };
 
   return (
