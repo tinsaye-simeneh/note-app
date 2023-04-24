@@ -8,6 +8,7 @@ import {
   Group,
 } from "@mantine/core";
 import { useRouter } from "next/router";
+import { IconNotes } from "@tabler/icons-react";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -27,7 +28,7 @@ function myNotes() {
   const { classes } = useStyles();
 
   return (
-    <Container size={1400} className={classes.wrapper}>
+    <Container size={1000} className={classes.wrapper}>
       {" "}
       {/* This is the container that holds the title and button */}
       <Group position="center" p="lg" bg="green">
@@ -40,7 +41,15 @@ function myNotes() {
           </Button>
         </Group>
       </Group>
-      <Group position="center" p="lg" bg="green" my="lg"></Group>
+      <Group position="left" p="lg" bg="green" my="lg">
+        <Group>
+          <IconNotes size={30} color="white" />
+          Note Title
+        </Group>
+        <Group ml="auto">
+          <Button onClick={() => router.push("/list/newNote")}>Edit</Button>
+        </Group>
+      </Group>
     </Container>
   );
 }
