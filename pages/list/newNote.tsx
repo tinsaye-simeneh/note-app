@@ -47,11 +47,12 @@ function myNotes() {
         </Group>
       </Group>
       {/* This is the container that holds the note title and button */}
-      <Paper shadow="sm" p="3rem">
+      <Paper shadow="md" p="3rem">
         <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
           <TextInput
             label="Note Title"
             placeholder="Enter your note title here"
+            required
           />
           <Select
             label="Note Category"
@@ -62,6 +63,7 @@ function myNotes() {
               { value: "Study", label: "Study" },
               { value: "Finance", label: "Finance" },
             ]}
+            required
           />
         </SimpleGrid>
 
@@ -70,16 +72,24 @@ function myNotes() {
           label="Your Notes"
           placeholder="Please include all relevant Note information here."
           minRows={10}
+          required
         />
       </Paper>
-      <Group position="center" p="lg" bg="green">
+      <Group position="center" p="lg" mt="2rem">
         <Group position="center">
-          <Button onClick={() => router.push("/list/myNotes")} bg="gray">
+          <Button
+            onClick={() => router.push("/list/myNotes")}
+            bg="gray"
+            size="md"
+            mx="2rem"
+          >
             Cancel
           </Button>
         </Group>
         <Group>
-          <Button onClick={() => router.push("/list/myNotes")}>Save</Button>
+          <Button onClick={() => router.push("/list/myNotes")} size="md">
+            Save
+          </Button>
         </Group>
       </Group>
     </Container>
