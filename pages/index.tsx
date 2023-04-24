@@ -112,7 +112,7 @@ function Home() {
           for your daily needs
         </Title>
 
-        <Container p={0} size={600}>
+        <Container p={0} size={600}></Container>
           <Text size="lg" color="dimmed" className={classes.description}>
             A place for your Notes and Tasks to be organized and accessible from
             anywhere in the world
